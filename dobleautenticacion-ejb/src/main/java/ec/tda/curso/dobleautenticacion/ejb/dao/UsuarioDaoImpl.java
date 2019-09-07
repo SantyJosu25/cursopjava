@@ -2,7 +2,6 @@ package ec.tda.curso.dobleautenticacion.ejb.dao;
 
 import ec.tda.curso.dobleautenticacion_ejb.dao.generic.DaoGenericoImplements;
 import ec.tda.curso.dobleautenticacion_ejb.entidades.Usuario;
-import ec.tda.curso.dobleautenticacion_ejb.entidades.Usuario_;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
