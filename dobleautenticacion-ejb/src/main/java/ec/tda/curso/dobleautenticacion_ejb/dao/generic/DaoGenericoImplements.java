@@ -10,14 +10,17 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class DaoGenericoImplements<E> implements DaoGenerico<E> {
     
-    @PersistenceContext(unitName = "DobleFatenticacion-PU")
-    private EntityManager entityManager;
+//    @PersistenceContext(unitName = "DobleFatenticacion-PU")
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("DobleFatenticacion-PU");
+    private EntityManager entityManager = emf.createEntityManager();
 
     public EntityManager getEntityManager() {
         return entityManager;
@@ -26,7 +29,6 @@ public class DaoGenericoImplements<E> implements DaoGenerico<E> {
     @Override
     public void save(E objeto) throws Exception {
         entityManager.persist(objeto);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

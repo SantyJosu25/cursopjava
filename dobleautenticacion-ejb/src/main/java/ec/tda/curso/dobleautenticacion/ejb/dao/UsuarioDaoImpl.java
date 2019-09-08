@@ -15,12 +15,12 @@ public class UsuarioDaoImpl extends DaoGenericoImplements<Usuario> {
         return listusuario;
     }
 
-    public boolean varificarUsuario1fa(String nickName, String password) {
+    public boolean varificarUsuario1fa(String usUsername, String usPass) {
         try {
-            StringBuilder query = new StringBuilder("select u from Usuario u where" + "u.usUsername = :nick u.usPass= 2?");
+            StringBuilder query = new StringBuilder("select u from Usuario u where u.usUsername = ?1 and u.usPass = ?2");
             Query consulta = getEntityManager().createQuery(query.toString());
-            consulta.setParameter("nick", nickName);
-            consulta.setParameter(2, DigestUtils.md5Hex(password));
+            consulta.setParameter(1, usUsername);
+            consulta.setParameter(2, usPass);
             Usuario user = (Usuario) consulta.getSingleResult();
             boolean valor = false;
             if (user != null) {
@@ -29,6 +29,7 @@ public class UsuarioDaoImpl extends DaoGenericoImplements<Usuario> {
 
             return valor;
         } catch (EntityNotFoundException e) {
+            e.printStackTrace();
             return false;
         }
     }
