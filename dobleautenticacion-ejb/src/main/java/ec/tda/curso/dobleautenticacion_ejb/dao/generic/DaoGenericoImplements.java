@@ -19,8 +19,8 @@ import javax.persistence.PersistenceContext;
 public class DaoGenericoImplements<E> implements DaoGenerico<E> {
     
 //    @PersistenceContext(unitName = "DobleFatenticacion-PU")
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("DobleFatenticacion-PU");
-    private EntityManager entityManager = emf.createEntityManager();
+    private EntityManager entityManager = Persistence.createEntityManagerFactory("DobleFatenticacion-PU").createEntityManager();
+  
 
     public EntityManager getEntityManager() {
         return entityManager;
