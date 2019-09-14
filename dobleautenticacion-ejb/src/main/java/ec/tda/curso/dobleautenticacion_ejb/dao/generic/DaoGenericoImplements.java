@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -28,7 +29,7 @@ public class DaoGenericoImplements<E> implements DaoGenerico<E> {
     
     @Override
     public void save(E objeto) throws Exception {
-        entityManager.persist(objeto);
+        getEntityManager().persist(objeto);
     }
 
     @Override
@@ -52,8 +53,22 @@ public class DaoGenericoImplements<E> implements DaoGenerico<E> {
     }
 
     @Override
-    public Integer generarId(String entidad, String Id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Integer generarId(String entidad, String id) {
+        Query q = getEntityManager().createQuery("select max(e." + id + ") from " + entidad + " e");
+        Integer numero = null;
+        try {
+            numero = (Integer) q.setMaxResults(1).getSingleResult();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            numero = null;
+        }
+        if (numero == null) {
+            numero = 1;
+        } else {
+            ++numero;
+        }
+        return numero;
     }
 
     @Override

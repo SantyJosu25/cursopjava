@@ -31,5 +31,10 @@ public class Principal extends UsuarioDaoImpl {
 
         valor = userDaoImp.varificarUsuario1fa("santy", "zdqmko2516");
         System.out.println("Existe Usuario " + valor);
+        
+        Usuario us = userDaoImp.findByNicknamePass("santiago", "santiago");
+        us.setUsUsername("santy modificacion");
+        
+        userDaoImp.save(us);
     }
 }

@@ -24,7 +24,7 @@ public class UsuarioDaoImpl extends DaoGenericoImplements<Usuario> implements Us
             StringBuilder query = new StringBuilder("select u from Usuario u where u.usUsername = ?1 and u.usPass = ?2");
             Query consulta = getEntityManager().createQuery(query.toString());
             consulta.setParameter(1, usUsername);
-            consulta.setParameter(2, usPass);
+            consulta.setParameter(2, DigestUtils.md5Hex(usPass));
             Usuario user = (Usuario) consulta.getSingleResult();
             boolean valor = false;
             if (user != null) {
@@ -37,4 +37,21 @@ public class UsuarioDaoImpl extends DaoGenericoImplements<Usuario> implements Us
             return false;
         }
     }
+    
+    public Usuario findByNicknamePass(String usUsername, String usPass){
+        try {
+            StringBuilder query = new StringBuilder("select u from Usuario u where u.usUsername = ?1 and u.usPass = ?2");
+            Query consulta = getEntityManager().createQuery(query.toString());
+            consulta.setParameter(1, usUsername);
+            consulta.setParameter(2, DigestUtils.md5Hex(usPass));
+            
+            Usuario user = (Usuario) consulta.getSingleResult();
+            
+            return user;
+        } catch (EntityNotFoundException e) {
+            
+            return null;
+        }
+    }
+    
 }

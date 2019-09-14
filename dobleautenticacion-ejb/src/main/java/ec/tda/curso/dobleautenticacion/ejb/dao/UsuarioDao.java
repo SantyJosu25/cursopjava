@@ -12,4 +12,5 @@ public interface UsuarioDao extends DaoGenerico<Usuario> {
     public List<Usuario> findAllUser();
 
     public boolean varificarUsuario1fa(String usUsername, String usPass);
+    public Usuario findByNicknamePass(String usUsername, String usPass);
 }
