@@ -3,10 +3,13 @@ package ec.tda.curso.dobleautenticacion.ejb.dao;
 import ec.tda.curso.dobleautenticacion_ejb.dao.generic.DaoGenerico;
 import ec.tda.curso.dobleautenticacion_ejb.entidades.Usuario;
 import java.util.List;
+import javax.ejb.Local;
 import javax.persistence.Query;
 
-public interface UsuarioDao extends DaoGenerico<Usuario>{
-    
+@Local
+public interface UsuarioDao extends DaoGenerico<Usuario> {
+
+    public List<Usuario> findAllUser();
+
+    public boolean varificarUsuario1fa(String usUsername, String usPass);
 }
-
-
