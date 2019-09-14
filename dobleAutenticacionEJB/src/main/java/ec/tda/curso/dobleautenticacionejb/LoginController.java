@@ -5,6 +5,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 
 @ManagedBean
 public class LoginController {
@@ -17,19 +18,29 @@ public class LoginController {
     private String nombreUsuario;
     private String clave;
 
+    public String getCodigoEmail() {
+        return codigoEmail;
+    }
+
+    public void setCodigoEmail(String codigoEmail) {
+        this.codigoEmail = codigoEmail;
+    }
+    private String codigoEmail;
+
     /**
      * Metodos*
      */
     public void login() {
+        
         boolean login = false;
+        
         login = usuarioDao.varificarUsuario1fa(nombreUsuario, clave);
         if (login) {
             addMessage("Logeo Exitoso");
+            PrimeFaces.current().executeScript("PF('pnlgSegundoFactor').show()");
         } else {
-            addMessage("credenciales Incorrectas");
+            addMessage("Logeo Fallido");
         }
-        System.out.println("Datos Usuario: " + nombreUsuario);
-        System.out.println("Clave usuario: " + clave);
     }
 
     public void addMessage(String summary) {
