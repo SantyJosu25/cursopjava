@@ -11,7 +11,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.swing.JOptionPane;
 import org.primefaces.PrimeFaces;
 
 @ManagedBean
@@ -26,14 +25,6 @@ public class LoginController {
      */
     private String nombreUsuario;
     private String clave;
-
-    public String getCodigoEmail() {
-        return codigoEmail;
-    }
-
-    public void setCodigoEmail(String codigoEmail) {
-        this.codigoEmail = codigoEmail;
-    }
     private String codigoEmail;
 
     /**
@@ -74,8 +65,9 @@ public class LoginController {
                 PrimeFaces.current().executeScript("PF('pnlgSegundoFactor').show()");
             } else {
                 addMessage("Logeo Fallido");
-                JOptionPane.showMessageDialog(null, "Datos Incorrectos");
             }
+            System.out.println("Dato de Usuario: " + nombreUsuario);
+            System.out.println("Clave de Usuario: " + clave);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,4 +95,11 @@ public class LoginController {
         this.clave = clave;
     }
 
+    public String getCodigoEmail() {
+        return codigoEmail;
+    }
+
+    public void setCodigoEmail(String codigoEmail) {
+        this.codigoEmail = codigoEmail;
+    }
 }

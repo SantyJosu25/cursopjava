@@ -1,5 +1,6 @@
 package ec.tda.curso.dobleautenticacion_ejb.utilitarios;
 
+import ec.tda.curso.dobleautenticacion_ejb.entidades.Usuario;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,8 +20,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-
-import ec.tda.curso.dobleautenticacion_ejb.entidades.Usuario;
 
 public class SendMailGmail {
 

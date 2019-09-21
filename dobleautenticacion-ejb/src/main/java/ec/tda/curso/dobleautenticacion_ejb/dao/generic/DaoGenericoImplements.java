@@ -7,6 +7,8 @@ import javax.ejb.Handle;
 import javax.ejb.HomeHandle;
 import javax.ejb.RemoveException;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
@@ -28,28 +30,45 @@ public class DaoGenericoImplements<E> implements DaoGenerico<E> {
     }
     
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void save(E objeto) throws Exception {
-        getEntityManager().persist(objeto);
+        entityManager.getTransaction().begin();
+        entityManager.persist(objeto);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void update(E objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        entityManager.getTransaction().begin();
+        entityManager.merge(objeto);
+        entityManager.getTransaction().commit();
     }
 
     @Override
+        @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void delete(E objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.merge(objeto));
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
     public Object getById(Class<E> classe, Object pk) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return entityManager.find(classe, pk);
+        } catch (Exception exception) {
+            return null;
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<E> getAll(Class<E> classe) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO Auto-generated method stub
+        return entityManager.createQuery(" select o from " + classe.getSimpleName() + " o ").getResultList();
     }
 
     @Override
@@ -72,23 +91,27 @@ public class DaoGenericoImplements<E> implements DaoGenerico<E> {
     }
 
     @Override
-    public void remove(Handle handle) throws RemoteException, RemoveException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void remove(Object o) throws RemoteException, RemoveException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public EJBMetaData getEJBMetaData() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
     public HomeHandle getHomeHandle() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void remove(Handle arg0) throws RemoteException, RemoveException {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void remove(Object arg0) throws RemoteException, RemoveException {
+        // TODO Auto-generated method stub
+
     }
 
 }
